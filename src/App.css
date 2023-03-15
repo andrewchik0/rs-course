@@ -23,7 +23,7 @@
 
 .header-button:hover {
   animation-name: header-button-animation;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
   background-image: linear-gradient(#555 0 0);
   background-position: bottom center;
   background-size: 80% 5px;
@@ -43,6 +43,6 @@
   padding: 20px;
 }
 
-.header-button.active:hover { 
+.header-button.active:hover {
   animation-name: none;
 }

@@ -7,7 +7,6 @@ import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
-
   return (
     <>
       <Header />
