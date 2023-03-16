@@ -1,0 +1,84 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "img": "src/assets/images/image1.jpg",
+      "name": "Cat 1",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 1. This cat is not for sale. This card is for testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare orci nec ullamcorper condimentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas"
+    },
+    {
+      "id": 2,
+      "img": "src/assets/images/image2.jpg",
+      "name": "Cat 2",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 2. This cat is not for sale too. This card is for testing."
+    },
+    {
+      "id": 3,
+      "img": "src/assets/images/image3.jpg",
+      "name": "Cat 3",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 3. This cat is not for sale too. This card is for testing."
+    },
+    {
+      "id": 4,
+      "img": "src/assets/images/image2.jpg",
+      "name": "Cat 4",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare orci nec ullamcorper condimentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas"
+    },
+    {
+      "id": 5,
+      "img": "src/assets/images/image3.jpg",
+      "name": "Cat 5",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 3. This cat is not for sale too. This card is for testing."
+    },
+    {
+      "id": 6,
+      "img": "src/assets/images/image1.jpg",
+      "name": "Cat 6",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare orci nec ullamcorper condimentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas"
+    },
+    {
+      "id": 7,
+      "img": "src/assets/images/image3.jpg",
+      "name": "Cat 7",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 3. This cat is not for sale too. This card is for testing."
+    },
+    {
+      "id": 8,
+      "img": "src/assets/images/image3.jpg",
+      "name": "Cat 8",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 3. This cat is not for sale too. This card is for testing."
+    },
+    {
+      "id": 9,
+      "img": "src/assets/images/image1.jpg",
+      "name": "Cat 9",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 3. This cat is not for sale too. This card is for testing."
+    },
+    {
+      "id": 10,
+      "img": "src/assets/images/image2.jpg",
+      "name": "Cat 10",
+      "price": 0,
+      "currency": "\u20AC",
+      "description": "This is a cute cat 3. This cat is not for sale too. This card is for testing."
+    }
+  ]
+}
