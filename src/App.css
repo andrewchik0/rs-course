@@ -46,3 +46,73 @@
 .header-button.active:hover {
   animation-name: none;
 }
+
+.not-found {
+  padding: 20px;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 30px;
+}
+
+.about {
+  padding: 20px;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 30px;
+}
+
+.search-bar {
+  text-align: center;
+  padding-top: 20px;
+  --border-radius: 5px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.search-input {
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  border: solid #000 2px;
+  height: 50px;
+  width: 400px;
+  font-size: 30px;
+  padding-left: 10px;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #f4f4f4;
+}
+
+.search-input::placeholder {
+  color: black;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-input:focus::placeholder {
+  color: transparent;
+}
+
+.search-button {
+  background-color: #f4f4f4;
+  position: relative;
+  top: 10px;
+  height: 54px;
+  width: 60px;
+  border: solid #000 2px;
+  border-left: none;
+  padding: 0;
+  font-size: 0;
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  transition: 0.3s;
+}
+
+
+.search-button:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
