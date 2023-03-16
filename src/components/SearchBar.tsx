@@ -1,7 +1,6 @@
-import React from "react";
+import React from 'react';
 
-class SearchBar extends React.Component<{}, { value: string}> {
-
+class SearchBar extends React.Component<{}, { value: string }> {
   constructor(props: {}) {
     super(props);
 
@@ -9,7 +8,9 @@ class SearchBar extends React.Component<{}, { value: string}> {
   }
 
   state = {
-    value: localStorage.getItem('search-value') ? localStorage.getItem('search-value') as string : ""
+    value: localStorage.getItem('search-value')
+      ? (localStorage.getItem('search-value') as string)
+      : '',
   };
 
   saveText(e: React.FocusEvent<HTMLInputElement>) {
@@ -21,10 +22,18 @@ class SearchBar extends React.Component<{}, { value: string}> {
   render(): React.ReactNode {
     return (
       <div className="search-bar">
-        <input type="text"  className="search-input" placeholder="Search..." onChange={this.saveText} value={this.state.value}/>
-        <button className="search-button"><img src="./search.svg" alt="Search" height="40px"/></button>
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search..."
+          onChange={this.saveText}
+          value={this.state.value}
+        />
+        <button className="search-button">
+          <img src="./search.svg" alt="Search" height="40px" />
+        </button>
       </div>
-    );  
+    );
   }
 }
 
