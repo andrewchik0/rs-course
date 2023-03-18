@@ -15,5 +15,6 @@
     "baseUrl": "./src",
     "resolveJsonModule": true
   },
+  "types": ["@testing-library/jest-dom"],
   "include": ["./src/**/*", "styled.d.ts"]
 }
