@@ -1,22 +1,29 @@
 import React from 'react';
 
-class SearchBar extends React.Component<{}, { value: string }> {
-  constructor(props: {}) {
+class SearchBar extends React.Component<Record<string, never>, { value: string }> {
+  constructor(props: Record<string, never>) {
     super(props);
 
-    this.saveText = this.saveText.bind(this);
+    this.state = { value: localStorage.getItem('search-value') || '' };
+    this.changeState = this.changeState.bind(this);
+    this.saveState = this.saveState.bind(this);
   }
 
-  state = {
-    value: localStorage.getItem('search-value')
-      ? (localStorage.getItem('search-value') as string)
-      : '',
-  };
+  saveState() {
+    localStorage.setItem('search-value', this.state.value);
+  }
 
-  saveText(e: React.FocusEvent<HTMLInputElement>) {
-    this.setState({ value: e.target.value }, () => {
-      localStorage.setItem('search-value', this.state.value);
-    });
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.saveState);
+  }
+
+  componentWillUnmount() {
+    this.saveState();
+    window.removeEventListener('beforeunload', this.saveState);
+  }
+
+  changeState(e: React.FocusEvent<HTMLInputElement>) {
+    this.setState({ value: e.target.value });
   }
 
   render(): React.ReactNode {
@@ -26,7 +33,7 @@ class SearchBar extends React.Component<{}, { value: string }> {
           type="text"
           className="search-input"
           placeholder="Search..."
-          onChange={this.saveText}
+          onChange={this.changeState}
           value={this.state.value}
         />
         <button className="search-button">

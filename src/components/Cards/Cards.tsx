@@ -4,7 +4,7 @@ import cards from '../../assets/cards.json';
 import Card from '../../components/Card/Card';
 
 function Cards() {
-  let cardComponents = cards.cards.map((card, idx) => <Card key={idx} card={card} />);
+  const cardComponents = cards.cards.map((card, idx) => <Card key={idx} card={card} />);
 
   return (
     <div className="content">

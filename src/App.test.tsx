@@ -5,9 +5,10 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
 it('renders app', () => {
-  render(
+  const { container } = render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
   );
+  expect(container.childElementCount).not.toEqual(0);
 });
