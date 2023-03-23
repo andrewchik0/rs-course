@@ -10,6 +10,9 @@ function Header() {
       <NavLink className="header-button" to="/about">
         <div className="header-text">About</div>
       </NavLink>
+      <NavLink className="new-card-button" to="/create-card">
+        <div className="header-text">+ New Cat</div>
+      </NavLink>
     </header>
   );
 }
