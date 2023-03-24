@@ -4,10 +4,41 @@ import { render, screen } from '@testing-library/react';
 import Card from './Card';
 import cards from '../../assets/cards.json';
 
-it('renders card', () => {
-  render(<Card card={cards.cards[0]} />);
+describe('renders card', () => {
+  it('renders card', () => {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const { ['birthday']: _, ...cardObject } = cards[0];
+    /* eslint-enable @typescript-eslint/no-unused-vars */
 
-  expect(screen.getByText(cards.cards[0].name)).toBeInTheDocument();
-  expect(screen.getByText(cards.cards[0].price + cards.cards[0].currency)).toBeInTheDocument();
-  expect(screen.getByText(cards.cards[0].description)).toBeInTheDocument();
+    render(<Card card={Object.assign(cardObject, { birthday: new Date() })} />);
+
+    expect(screen.getByText(cards[0].name)).toBeInTheDocument();
+    expect(
+      screen.getByText(cards[0].microchipped ? 'Microchipped' : 'Not microchipped')
+    ).toBeInTheDocument();
+    expect(screen.getByText(cards[0].breed)).toBeInTheDocument();
+    expect(screen.getByText(/Day/)).toBeInTheDocument();
+  });
+
+  it('renders card', () => {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const { ['birthday']: _, ...cardObject } = cards[0];
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
+    const now = new Date();
+    const date = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    render(<Card card={Object.assign(cardObject, { birthday: date })} />);
+    expect(screen.getByText(/Month/)).toBeInTheDocument();
+  });
+
+  it('renders card', () => {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const { ['birthday']: _, ...cardObject } = cards[0];
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
+    const now = new Date();
+    const date = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    render(<Card card={Object.assign(cardObject, { birthday: date })} />);
+    expect(screen.getByText(/Year/)).toBeInTheDocument();
+  });
 });

@@ -10,7 +10,7 @@
     "eslint": "eslint .",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
     "coverage": "jest --coverage"
   },
   "husky": {
