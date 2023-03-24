@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Card from '../../components/Card/Card';
+import ICard from 'models/CardModel';
 import catBreeds from '../../assets/cat-breeds.json';
 
 export default class CreateCardPage extends React.Component {
@@ -17,6 +19,8 @@ export default class CreateCardPage extends React.Component {
     genderValid: boolean;
     imageValid: boolean;
     imageName: string;
+    cards: ICard[];
+    successShown: boolean;
   };
 
   constructor(props: Record<string, never>) {
@@ -36,33 +40,76 @@ export default class CreateCardPage extends React.Component {
       breedValid: true,
       genderValid: true,
       imageValid: true,
+      cards: [],
+      successShown: false,
     };
     this.submit = this.submit.bind(this);
   }
 
   submit() {
-    let image: boolean;
+    const image = !(
+      !this.imageFile.current?.files?.length ||
+      (this.imageFile.current.files[0].name.split('.').pop() != 'jpg' &&
+        this.imageFile.current.files[0].name.split('.').pop() != 'jpeg' &&
+        this.imageFile.current.files[0].name.split('.').pop() != 'png' &&
+        this.imageFile.current.files[0].name.split('.').pop() != 'bmp')
+    );
 
-    if (!this.imageFile.current?.files?.length) {
-      image = false;
-    } else if (
-      this.imageFile.current.files[0].name.split('.').pop() != 'jpg' &&
-      this.imageFile.current.files[0].name.split('.').pop() != 'jpeg' &&
-      this.imageFile.current.files[0].name.split('.').pop() != 'png' &&
-      this.imageFile.current.files[0].name.split('.').pop() != 'bmp'
-    ) {
-      image = false;
-    } else {
-      image = true;
-    }
+    const date = !(
+      !this.birthday.current?.value ||
+      new Date(this.birthday.current.value).getTime() > Date.now() ||
+      new Date(this.birthday.current.value).getTime() < 0
+    );
 
-    this.setState({
-      nameValid: this.name.current?.value,
-      dateValid: this.birthday.current?.value,
-      breedValid: this.breed.current?.value,
-      genderValid: this.female.current?.checked || this.male.current?.checked,
-      imageValid: image,
-    });
+    this.setState(
+      {
+        nameValid: this.name.current?.value,
+        dateValid: date,
+        breedValid: this.breed.current?.value,
+        genderValid: this.female.current?.checked || this.male.current?.checked,
+        imageValid: image,
+      },
+      () => {
+        if (
+          !this.name.current?.value ||
+          !this.imageFile.current?.files?.length ||
+          !this.birthday.current?.value ||
+          !date ||
+          !this.breed.current?.value ||
+          (!this.female.current?.checked && !this.male.current?.checked) ||
+          !image
+        ) {
+          return;
+        }
+
+        this.setState({
+          successShown: true,
+          cards: this.state.cards.concat([
+            {
+              name: this.name.current.value,
+              img: URL.createObjectURL(this.imageFile.current?.files[0]),
+              breed: this.breed.current.value,
+              gender: this.female.current?.checked ? 'female' : 'male',
+              birthday: new Date(this.birthday.current.value),
+              microchipped: this.isMicrochipped.current?.checked || false,
+            },
+          ]),
+          imageName: 'Choose a file',
+        });
+
+        this.birthday.current.value = '';
+        this.breed.current.value = '';
+        if (this.male.current) this.male.current.checked = false;
+        if (this.female.current) this.female.current.checked = false;
+        this.imageFile.current.value = '';
+        if (this.isMicrochipped.current) this.isMicrochipped.current.checked = false;
+        this.name.current.value = '';
+
+        setTimeout(() => {
+          this.setState({ successShown: false });
+        }, 3000);
+      }
+    );
   }
 
   render(): React.ReactNode {
@@ -70,7 +117,9 @@ export default class CreateCardPage extends React.Component {
       <div className="form-container">
         <form className="form">
           <div className="form-field">
-            <label htmlFor="name-input">Name:</label>
+            <label htmlFor="name-input">
+              Name<span style={{ color: 'red' }}>*</span>:
+            </label>
             <div>
               <input
                 className="form-input"
@@ -88,19 +137,23 @@ export default class CreateCardPage extends React.Component {
           </div>
 
           <div className="form-field">
-            <label htmlFor="date-input">Cat birthday: </label>
+            <label htmlFor="date-input">
+              Cat birthday<span style={{ color: 'red' }}>*</span>:
+            </label>
             <div>
               <input className="form-input" id="date-input" type="date" ref={this.birthday} />
             </div>
             {this.state.dateValid ? (
               <div></div>
             ) : (
-              <div className="error-validation">&#x26A0; Enter birthday</div>
+              <div className="error-validation">&#x26A0; Enter valid birthday</div>
             )}
           </div>
 
           <div className="form-field">
-            <label htmlFor="breed">Breed:</label>
+            <label htmlFor="breed">
+              Breed<span style={{ color: 'red' }}>*</span>:
+            </label>
             <div>
               <select className="form-input" id="breed" ref={this.breed}>
                 <option value="">Select breed ...</option>
@@ -119,7 +172,9 @@ export default class CreateCardPage extends React.Component {
           </div>
 
           <div className="form-field">
-            <div>Gender:</div>
+            <div>
+              Gender<span style={{ color: 'red' }}>*</span>:
+            </div>
             <div>
               <input
                 type="radio"
@@ -160,7 +215,9 @@ export default class CreateCardPage extends React.Component {
           </div>
 
           <div className="form-field">
-            <label htmlFor="image">Image:</label>
+            <label htmlFor="image">
+              Image<span style={{ color: 'red' }}>*</span>:
+            </label>
             <div>
               <label className="custom-file-upload" htmlFor="image">
                 Upload image
@@ -191,6 +248,16 @@ export default class CreateCardPage extends React.Component {
             </button>
           </div>
         </form>
+
+        <div className="success-message" style={{ opacity: this.state.successShown ? 1.0 : 0.0 }}>
+          <span style={{ fontWeight: 1000 }}>&#10003;</span> Card has been submitted
+        </div>
+
+        <div className="card-container" style={{ fontSize: '15px' }}>
+          {this.state.cards.map((card, idx) => (
+            <Card key={idx} card={card} />
+          ))}
+        </div>
       </div>
     );
   }

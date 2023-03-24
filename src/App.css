@@ -215,7 +215,7 @@
     Verdana, sans-serif;
   text-align: center;
   margin: 20px;
-  height: 320px;
+  height: 345px;
 }
 
 .card-image {
@@ -228,7 +228,7 @@
   margin: 0;
 }
 
-.card-price {
+.card > h4 {
   margin: 0;
 }
 
@@ -359,6 +359,7 @@
   transition: 0.3s;
   font-size: 30px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  cursor: pointer;
 }
 
 .submit-button:hover {
@@ -368,4 +369,18 @@
 .error-validation {
   font-size: 20px;
   color: red;
+}
+
+.success-message {
+  transition: 0.5s;
+  position: fixed;
+  right: 40px;
+  bottom: 30px;
+  color: rgb(0, 82, 0);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva,
+    Verdana, sans-serif;
+  background-color: rgb(101, 230, 101);
+  padding: 10px 20px;
+  border: solid 2px rgb(72, 201, 72);
+  border-radius: 4px;
 }

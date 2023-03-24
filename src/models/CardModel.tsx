@@ -1,7 +1,8 @@
-export default interface CardModel {
+export default interface ICard {
   img: string;
   name: string;
-  price: number;
-  currency: string;
-  description: string;
+  birthday: Date;
+  breed: string;
+  gender: string;
+  microchipped: boolean;
 }

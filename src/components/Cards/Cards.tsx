@@ -4,11 +4,17 @@ import cards from '../../assets/cards.json';
 import Card from '../../components/Card/Card';
 
 function Cards() {
-  const cardComponents = cards.cards.map((card, idx) => <Card key={idx} card={card} />);
-
   return (
     <div className="content">
-      <div className="card-container">{cardComponents}</div>
+      <div className="card-container">
+        {cards.map((card, idx) => {
+          const { ['birthday']: birthday, ...cardObject } = card;
+
+          return (
+            <Card key={idx} card={Object.assign(cardObject, { birthday: new Date(birthday) })} />
+          );
+        })}
+      </div>
     </div>
   );
 }
