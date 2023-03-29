@@ -1,47 +1,34 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-class SearchBar extends React.Component<Record<string, never>, { value: string }> {
-  constructor(props: Record<string, never>) {
-    super(props);
+export default function SearchBar() {
+  const [value, setValue] = useState(localStorage.getItem('search-value') || '');
+  const refValue = useRef('');
 
-    this.state = { value: localStorage.getItem('search-value') || '' };
-    this.changeState = this.changeState.bind(this);
-    this.saveState = this.saveState.bind(this);
-  }
+  refValue.current = value;
 
-  saveState() {
-    localStorage.setItem('search-value', this.state.value);
-  }
+  const saveState = useCallback(() => localStorage.setItem('search-value', refValue.current), []);
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.saveState);
-  }
+  useEffect(() => {
+    window.addEventListener('beforeunload', saveState)
+  }, [])
 
-  componentWillUnmount() {
-    this.saveState();
-    window.removeEventListener('beforeunload', this.saveState);
-  }
+  useEffect(() => () => {
+    localStorage.setItem('search-value', refValue.current)
+    window.removeEventListener('beforeunload', saveState);
+  }, []);
 
-  changeState(e: React.FocusEvent<HTMLInputElement>) {
-    this.setState({ value: e.target.value });
-  }
-
-  render(): React.ReactNode {
-    return (
-      <div className="search-bar">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search..."
-          onChange={this.changeState}
-          value={this.state.value}
-        />
-        <button className="search-button">
-          <img src="./search.svg" alt="Search" height="40px" />
-        </button>
-      </div>
-    );
-  }
+  return (
+    <div className="search-bar">
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search..."
+        value={value}
+        onChange={(e) => setValue(e.target.value) }
+      />
+      <button className="search-button">
+        <img src="./search.svg" alt="Search" height="40px" />
+      </button>
+    </div>
+  );
 }
-
-export default SearchBar;
