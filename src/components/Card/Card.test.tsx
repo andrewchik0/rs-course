@@ -26,7 +26,7 @@ describe('renders card', () => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     const now = new Date();
-    const date = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    const date = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate() - 4);
     render(<Card card={Object.assign(cardObject, { birthday: date })} />);
     expect(screen.getByText(/Month/)).toBeInTheDocument();
   });
