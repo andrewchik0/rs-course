@@ -9,13 +9,16 @@ export default function SearchBar() {
   const saveState = useCallback(() => localStorage.setItem('search-value', refValue.current), []);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', saveState)
-  }, [])
+    window.addEventListener('beforeunload', saveState);
+  }, [saveState]);
 
-  useEffect(() => () => {
-    localStorage.setItem('search-value', refValue.current)
-    window.removeEventListener('beforeunload', saveState);
-  }, []);
+  useEffect(
+    () => () => {
+      localStorage.setItem('search-value', refValue.current);
+      window.removeEventListener('beforeunload', saveState);
+    },
+    [saveState]
+  );
 
   return (
     <div className="search-bar">
@@ -24,7 +27,7 @@ export default function SearchBar() {
         className="search-input"
         placeholder="Search..."
         value={value}
-        onChange={(e) => setValue(e.target.value) }
+        onChange={(e) => setValue(e.target.value)}
       />
       <button className="search-button">
         <img src="./search.svg" alt="Search" height="40px" />
