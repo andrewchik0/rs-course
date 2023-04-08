@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
-import Cards from '../../components/Cards/Cards';
+import Photos from '../../components/Photos/Photos';
 
 function HomePage() {
+  const [data, setData] = useState('');
+
+  const handleInputResponse = (response: string) => {
+    setData(response);
+  };
+
   return (
     <>
-      <SearchBar />
-      <Cards />
+      <SearchBar onInput={handleInputResponse} />
+      <Photos photos={data} />
     </>
   );
 }
