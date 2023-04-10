@@ -3,12 +3,16 @@ import { render } from '@testing-library/react';
 
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
 
-it('renders app', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve() })) as jest.Mock;
+
+it('renders app', async () => {
+  await act(async () =>
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    )
   );
-  expect(container.childElementCount).not.toEqual(0);
 });

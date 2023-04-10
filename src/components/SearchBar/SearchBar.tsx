@@ -10,22 +10,10 @@ export default function SearchBar(props: { onInput: (response: string) => void }
 
   const saveState = useCallback(() => localStorage.setItem('search-value', refValue.current), []);
 
-  useEffect(() => {
-    window.addEventListener('beforeunload', saveState);
-  }, [saveState]);
-
-  useEffect(
-    () => () => {
-      localStorage.setItem('search-value', refValue.current);
-      window.removeEventListener('beforeunload', saveState);
-    },
-    [saveState]
-  );
-
-  const search = () => {
+  const search = useCallback(() => {
     fetch(
       'https://api.unsplash.com/' +
-        (value ? 'search/photos?page=1&query=' + value : 'photos/random?count=10'),
+        (value ? 'search/photos?page=1&query=' + value : 'search/photos?page=1&query=photos'),
       {
         method: 'GET',
         mode: 'cors',
@@ -41,7 +29,20 @@ export default function SearchBar(props: { onInput: (response: string) => void }
       props.onInput(JSON.stringify(await response.json()));
     });
     setIsLoading(true);
-  };
+  }, [props, value]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', saveState);
+    search();
+  }, [saveState]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(
+    () => () => {
+      localStorage.setItem('search-value', refValue.current);
+      window.removeEventListener('beforeunload', saveState);
+    },
+    [saveState]
+  );
 
   return (
     <div className="search-bar">
