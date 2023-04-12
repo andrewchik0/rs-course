@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Photo from '../../components/Photo/Photo';
-import { IPhoto } from 'models/IPhoto';
+import IPhoto from 'models/IPhoto';
 
 export default function Photos(props: { photos: string }) {
   return (

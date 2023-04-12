@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './PhotoModal.css';
 import Roller from '../../components/Roller/Roller';
-import { IPhoto } from 'models/IPhoto';
+import IPhoto from 'models/IPhoto';
 
 export default function PhotoModal(props: { photoId: string; onClose: () => void }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);

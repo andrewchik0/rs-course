@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ICard from 'models/CardModel';
+import ICard from 'models/ICard';
 
 function Card(props: { card: ICard }) {
   const getAge = (birthday: Date) => {

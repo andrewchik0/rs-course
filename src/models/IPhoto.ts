@@ -1,4 +1,4 @@
-export interface IPhoto {
+export default interface IPhoto {
   id: string;
   description: string;
   alt_description: string;

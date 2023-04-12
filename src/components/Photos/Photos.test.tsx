@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import Photos from './Photos';
 import photos from '../../assets/photos.json';
-import { IPhoto } from 'models/IPhoto';
+import IPhoto from 'models/IPhoto';
 
 it('renders all photos', async () => {
   const response = JSON.stringify(photos);
