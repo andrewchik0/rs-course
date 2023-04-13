@@ -1,47 +1,24 @@
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Roller from '../../components/Roller/Roller';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { photoAPI, useFetchByTextQuery } from '../../services/PhotoService';
+import { searchInputSlice } from '../../store/reducers/SearchInputSlice';
 
-export default function SearchBar(props: { onInput: (response: string) => void }) {
-  const [value, setValue] = useState(localStorage.getItem('search-value') || '');
-  const [isLoading, setIsLoading] = useState(false);
-  const refValue = useRef('');
+export default function SearchBar() {
+  const dispatch = useAppDispatch();
+  const { value } = useAppSelector((state) => state.searchInputReducer);
+  const { setValue } = searchInputSlice.actions;
+  const { isFetching } = useFetchByTextQuery(value);
 
-  refValue.current = value;
-
-  const saveState = useCallback(() => localStorage.setItem('search-value', refValue.current), []);
-
-  const search = useCallback(() => {
-    fetch(
-      'https://api.unsplash.com/' +
-        (value ? 'search/photos?page=1&query=' + value : 'search/photos?page=1&query=photos'),
-      {
-        method: 'GET',
-        mode: 'cors',
-        headers: new Headers({
-          Authorization: 'Client-ID oEs-sd2oWIy5g8sGMuh8Dp52cQTkggVZg7fIIkIyhrc',
-          'Accept-Version': 'v1',
-          'X-Per-Page': '10',
-          'X-Total': '1',
-        }),
-      }
-    ).then(async (response) => {
-      setIsLoading(false);
-      props.onInput(JSON.stringify(await response.json()));
-    });
-    setIsLoading(true);
-  }, [props, value]);
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', saveState);
-    search();
-  }, [saveState]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [localValue, setLocalValue] = useState(value || '');
+  const localValueRef = useRef('');
+  localValueRef.current = localValue;
 
   useEffect(
     () => () => {
-      localStorage.setItem('search-value', refValue.current);
-      window.removeEventListener('beforeunload', saveState);
+      dispatch(setValue(localValueRef.current));
     },
-    [saveState]
+    [dispatch, setValue]
   );
 
   return (
@@ -50,14 +27,14 @@ export default function SearchBar(props: { onInput: (response: string) => void }
         type="text"
         className="search-input"
         placeholder="Search..."
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={localValue}
+        onChange={(e) => setLocalValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') search();
+          if (e.key === 'Enter') dispatch(setValue(localValue));
         }}
       />
-      <button className="search-button" onClick={search}>
-        {isLoading ? (
+      <button className="search-button" onClick={() => dispatch(setValue(localValue))}>
+        {isFetching ? (
           <Roller scale={0.5} x={-10} y={-10} />
         ) : (
           <img src="./search.svg" alt="Search" height="40px" />

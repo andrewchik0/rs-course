@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import Card from '../../components/Card/Card';
 import catBreeds from '../../assets/cat-breeds.json';
 import { FieldValues, useForm } from 'react-hook-form';
-import ICard from 'models/CardModel';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { cardSlice } from '../../store/reducers/CardSlice';
 
 export default function CreateCardPage() {
   const {
@@ -14,18 +15,20 @@ export default function CreateCardPage() {
     reset,
   } = useForm();
   const [successShown, setSuccessShown] = useState(false);
-  const [cards, setCards] = useState<ICard[]>([]);
+  const { addCard } = cardSlice.actions;
+  const { cards } = useAppSelector((state) => state.cardReducer);
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValues) => {
     const card = {
       name: data.name,
-      birthday: new Date(data.date),
+      birthday: new Date(data.date).getTime(),
       breed: data.breed,
       gender: data.gender,
       microchipped: data.microchipped,
       img: URL.createObjectURL(data.image[0]),
     };
-    setCards([...cards, card]);
+    dispatch(addCard(card));
     setSuccessShown(true);
     setTimeout(() => {
       setSuccessShown(false);

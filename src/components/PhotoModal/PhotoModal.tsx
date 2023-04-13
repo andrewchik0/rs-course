@@ -1,29 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import './PhotoModal.css';
 import Roller from '../../components/Roller/Roller';
 import IPhoto from 'models/IPhoto';
+import { photoAPI, useGetByIdQuery } from '../../services/PhotoService';
 
 export default function PhotoModal(props: { photoId: string; onClose: () => void }) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [photo, setPhoto] = useState<IPhoto>();
-
-  useEffect(() => {
-    fetch('https://api.unsplash.com/photos/' + props.photoId, {
-      method: 'GET',
-      mode: 'cors',
-      headers: new Headers({
-        Authorization: 'Client-ID oEs-sd2oWIy5g8sGMuh8Dp52cQTkggVZg7fIIkIyhrc',
-        'Accept-Version': 'v1',
-        'X-Per-Page': '12',
-        'X-Total': '1',
-      }),
-    }).then(async (response) => {
-      setIsLoading(false);
-      setPhoto((await response.json()) as IPhoto);
-    });
-    setIsLoading(true);
-  }, [props.photoId]);
+  const { data: photo, isFetching } = useGetByIdQuery(props.photoId);
 
   const close = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -45,7 +28,7 @@ export default function PhotoModal(props: { photoId: string; onClose: () => void
         <button className="close-button" onClick={props.onClose}>
           x
         </button>
-        {isLoading ? (
+        {isFetching ? (
           <Roller scale={1} x={0} y={0} style={{ paddingTop: '30%', paddingLeft: '45%' }} />
         ) : (
           <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>

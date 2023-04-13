@@ -11,7 +11,10 @@ function Cards() {
           const { ['birthday']: birthday, ...cardObject } = card;
 
           return (
-            <Card key={idx} card={Object.assign(cardObject, { birthday: new Date(birthday) })} />
+            <Card
+              key={idx}
+              card={Object.assign(cardObject, { birthday: new Date(birthday).getTime() })}
+            />
           );
         })}
       </div>

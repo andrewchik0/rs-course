@@ -1,16 +1,19 @@
 import React from 'react';
 
 import Photo from '../../components/Photo/Photo';
-import IPhoto from 'models/IPhoto';
+import { useAppSelector } from '../../hooks/redux';
+import { photoAPI, useFetchByTextQuery } from '../../services/PhotoService';
 
-export default function Photos(props: { photos: string }) {
+export default function Photos() {
+  const { data } = useFetchByTextQuery(
+    useAppSelector((state) => state.searchInputReducer).value
+  );
+  const photos = data?.results;
+
   return (
     <div className="content">
       <div className="card-container">
-        {props.photos &&
-          (JSON.parse(props.photos).results || JSON.parse(props.photos)).map((photo: IPhoto) => {
-            return <Photo key={photo.id} photo={photo} />;
-          })}
+        {photos && photos.map((photo) => <Photo key={photo.id} photo={photo} />)}
       </div>
     </div>
   );

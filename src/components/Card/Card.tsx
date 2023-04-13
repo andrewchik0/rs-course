@@ -3,14 +3,14 @@ import React from 'react';
 import ICard from 'models/ICard';
 
 function Card(props: { card: ICard }) {
-  const getAge = (birthday: Date) => {
+  const getAge = (time: number) => {
     function format(x: number) {
       return x.toLocaleString('en-US', {
         minimumIntegerDigits: 2,
         useGrouping: false,
       });
     }
-
+    const birthday = new Date(time);
     const days = Math.floor((Date.now() - birthday.getTime()) / 1000 / 3600 / 24);
     const months =
       new Date().getMonth() -
