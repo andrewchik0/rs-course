@@ -1,4 +1,4 @@
-import 'whatwg-fetch'
+import 'whatwg-fetch';
 import React from 'react';
 import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
 
@@ -12,8 +12,10 @@ describe('render modal window', () => {
 
   it('renders photo modal window', async () => {
     let showModal = true;
-    await act(async () => renderWithProviders(<PhotoModal photoId={'mock-id'} onClose={() => showModal = false} />));
-  
+    await act(async () =>
+      renderWithProviders(<PhotoModal photoId={'mock-id'} onClose={() => (showModal = false)} />)
+    );
+
     expect(screen.getByTestId('roller')).toBeInTheDocument();
     await waitFor(() => {
       expect(
@@ -22,17 +24,24 @@ describe('render modal window', () => {
       fireEvent.click(screen.getAllByText(/x/i)[0]);
       expect(showModal).toBe(false);
       showModal = true;
-      fireEvent.click(screen.getByTestId('modal-layout'))
+      fireEvent.click(screen.getByTestId('modal-layout'));
       expect(showModal).toBe(false);
       showModal = true;
-      fireEvent.click(screen.getByTestId('modal-window'))
+      fireEvent.click(screen.getByTestId('modal-window'));
       expect(showModal).toBe(true);
-      fireEvent.keyDown(screen.getByTestId('modal-layout'), {key: 'Escape', keyCode: 27, charCode: 27})
+      fireEvent.keyDown(screen.getByTestId('modal-layout'), {
+        key: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
       expect(showModal).toBe(false);
       showModal = true;
-      fireEvent.keyDown(screen.getByTestId('modal-layout'), {key: 'Enter', keyCode: 13, charCode: 13})
+      fireEvent.keyDown(screen.getByTestId('modal-layout'), {
+        key: 'Enter',
+        keyCode: 13,
+        charCode: 13,
+      });
       expect(showModal).toBe(true);
-    })
+    });
   });
-})
-
+});

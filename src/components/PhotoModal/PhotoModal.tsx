@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import './PhotoModal.css';
 import Roller from '../../components/Roller/Roller';
 import IPhoto from 'models/IPhoto';
-import { photoAPI, useGetByIdQuery } from '../../services/PhotoService';
+import { useGetByIdQuery } from '../../services/PhotoService';
 
 export default function PhotoModal(props: { photoId: string; onClose: () => void }) {
   const { data: photo, isFetching } = useGetByIdQuery(props.photoId);

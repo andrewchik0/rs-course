@@ -2,12 +2,10 @@ import React from 'react';
 
 import Photo from '../../components/Photo/Photo';
 import { useAppSelector } from '../../hooks/redux';
-import { photoAPI, useFetchByTextQuery } from '../../services/PhotoService';
+import { useFetchByTextQuery } from '../../services/PhotoService';
 
 export default function Photos() {
-  const { data } = useFetchByTextQuery(
-    useAppSelector((state) => state.searchInputReducer).value
-  );
+  const { data } = useFetchByTextQuery(useAppSelector((state) => state.searchInputReducer).value);
   const photos = data?.results;
 
   return (

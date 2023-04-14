@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Roller from '../../components/Roller/Roller';
 import React, { useEffect, useRef, useState } from 'react';
-import { photoAPI, useFetchByTextQuery } from '../../services/PhotoService';
+import { useFetchByTextQuery } from '../../services/PhotoService';
 import { searchInputSlice } from '../../store/reducers/SearchInputSlice';
 
 export default function SearchBar() {
@@ -28,8 +28,8 @@ export default function SearchBar() {
         className="search-input"
         placeholder="Search..."
         value={localValue}
-        onChange={e => setLocalValue(e.target.value)}
-        onKeyDown={e => e.key === 'Enter' && dispatch(setValue(localValue))}
+        onChange={(e) => setLocalValue(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && dispatch(setValue(localValue))}
       />
       <button className="search-button" onClick={() => dispatch(setValue(localValue))}>
         {isFetching ? (

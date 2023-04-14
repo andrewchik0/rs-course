@@ -20,12 +20,12 @@ export default function PortalExample(props: { photo: IPhoto }) {
         src={props.photo.urls.small}
         onClick={() => setShowModal(true)}
       />
-      {(props.photo.alt_description && (
+      {props.photo.alt_description && (
         <h4>
           {props.photo.alt_description.charAt(0).toUpperCase() +
             props.photo.alt_description.slice(1)}
         </h4>
-      ))}
+      )}
     </div>
   );
 }

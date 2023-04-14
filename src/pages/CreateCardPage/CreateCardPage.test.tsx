@@ -4,13 +4,13 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import CreateCardPage from './CreateCardPage';
 import { renderWithProviders } from '../../utils/TestUtils';
 
-const getStringMoreThan4Mb = () =>  {
-  let res = ''
-  for(let i = 0; i < 1024 * 1024; i++) {
+const getStringMoreThan4Mb = () => {
+  let res = '';
+  for (let i = 0; i < 1024 * 1024; i++) {
     res += 'abcde';
   }
   return res;
-}
+};
 
 describe('create card works', () => {
   global.URL.createObjectURL = jest.fn();
@@ -28,12 +28,26 @@ describe('create card works', () => {
       expect(screen.getByText('\u26A0 Enter a valid birthday')).toBeInTheDocument();
       expect(screen.getByText('\u26A0 Enter name of the cat')).toBeInTheDocument();
     });
-    fireEvent.change(screen.getByLabelText(/cat birthday/i), { target: { value: new Date(new Date().getFullYear() + 1, new Date().getMonth() + 1, new Date().getDate() + 1).toISOString().substring(0, 10) } });
+    fireEvent.change(screen.getByLabelText(/cat birthday/i), {
+      target: {
+        value: new Date(
+          new Date().getFullYear() + 1,
+          new Date().getMonth() + 1,
+          new Date().getDate() + 1
+        )
+          .toISOString()
+          .substring(0, 10),
+      },
+    });
     fireEvent.click(screen.getByText('Submit'));
     await waitFor(() => {
-      expect(screen.getByText('\u26A0 Date should be less than today\x27s date')).toBeInTheDocument();
+      expect(
+        screen.getByText('\u26A0 Date should be less than today\x27s date')
+      ).toBeInTheDocument();
     });
-    fireEvent.change(screen.getByLabelText(/cat birthday/i), { target: { value: new Date('1960').toISOString().substring(0, 10) } });
+    fireEvent.change(screen.getByLabelText(/cat birthday/i), {
+      target: { value: new Date('1960').toISOString().substring(0, 10) },
+    });
     fireEvent.click(screen.getByText('Submit'));
     await waitFor(() => {
       expect(screen.getByText('\u26A0 Enter a valid date')).toBeInTheDocument();
@@ -46,7 +60,7 @@ describe('create card works', () => {
       expect(screen.getByText('\u26A0 Only PNG, JPEG or JPG files accepted')).toBeInTheDocument();
     });
 
-    const bigFile = new File([getStringMoreThan4Mb()], 'image.png', { type: 'blob' })
+    const bigFile = new File([getStringMoreThan4Mb()], 'image.png', { type: 'blob' });
     fireEvent.change(screen.getByLabelText(/image/i), { target: { files: [bigFile] } });
     fireEvent.click(screen.getByText('Submit'));
     await waitFor(() => {

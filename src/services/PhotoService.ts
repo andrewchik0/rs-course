@@ -14,15 +14,16 @@ export const photoAPI = createApi({
   endpoints: (build) => ({
     fetchByText: build.query<{ results: IPhoto[] }, string>({
       query: (text) => {
-        return ({
-        url: '/search/photos',
-        params: {
-          page: 1,
-          query: text || 'photos',
-        },
-        headers: headers,
-        mode: 'cors',
-      })},
+        return {
+          url: '/search/photos',
+          params: {
+            page: 1,
+            query: text || 'photos',
+          },
+          headers: headers,
+          mode: 'cors',
+        };
+      },
     }),
     getById: build.query<IPhoto, string>({
       query: (id) => ({
@@ -35,4 +36,4 @@ export const photoAPI = createApi({
 });
 
 export default photoAPI;
-export const {useFetchByTextQuery, useGetByIdQuery} = photoAPI;
+export const { useFetchByTextQuery, useGetByIdQuery } = photoAPI;
