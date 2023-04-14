@@ -1,19 +1,38 @@
+import 'whatwg-fetch'
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
 
 import PhotoModal from './PhotoModal';
 import photos from '../../assets/photos.json';
 import { act } from 'react-dom/test-utils';
+import { renderWithProviders } from '../../utils/TestUtils';
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({ json: () => Promise.resolve(photos.results[0]) })
-) as jest.Mock;
+describe('render modal window', () => {
+  afterEach(cleanup);
 
-it('renders all photos', async () => {
-  await act(async () => render(<PhotoModal photoId={photos.results[0].id} onClose={() => {}} />));
+  it('renders photo modal window', async () => {
+    let showModal = true;
+    await act(async () => renderWithProviders(<PhotoModal photoId={'mock-id'} onClose={() => showModal = false} />));
+  
+    expect(screen.getByTestId('roller')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(new RegExp(photos.results[0].alt_description, 'i'))
+      ).toBeInTheDocument();
+      fireEvent.click(screen.getAllByText(/x/i)[0]);
+      expect(showModal).toBe(false);
+      showModal = true;
+      fireEvent.click(screen.getByTestId('modal-layout'))
+      expect(showModal).toBe(false);
+      showModal = true;
+      fireEvent.click(screen.getByTestId('modal-window'))
+      expect(showModal).toBe(true);
+      fireEvent.keyDown(screen.getByTestId('modal-layout'), {key: 'Escape', keyCode: 27, charCode: 27})
+      expect(showModal).toBe(false);
+      showModal = true;
+      fireEvent.keyDown(screen.getByTestId('modal-layout'), {key: 'Enter', keyCode: 13, charCode: 13})
+      expect(showModal).toBe(true);
+    })
+  });
+})
 
-  expect(
-    screen.getAllByText(new RegExp(photos.results[0].alt_description, 'i'))[0]
-  ).toBeInTheDocument();
-  fireEvent.click(screen.getAllByText(/x/i)[0]);
-});

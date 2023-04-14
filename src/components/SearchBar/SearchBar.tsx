@@ -28,10 +28,8 @@ export default function SearchBar() {
         className="search-input"
         placeholder="Search..."
         value={localValue}
-        onChange={(e) => setLocalValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') dispatch(setValue(localValue));
-        }}
+        onChange={e => setLocalValue(e.target.value)}
+        onKeyDown={e => e.key === 'Enter' && dispatch(setValue(localValue))}
       />
       <button className="search-button" onClick={() => dispatch(setValue(localValue))}>
         {isFetching ? (

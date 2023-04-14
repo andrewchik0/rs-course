@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import cards from '../../assets/cards.json';
 import Cards from './Cards';
+import { renderWithProviders } from '../../utils/TestUtils';
 
 it('renders all cards', () => {
-  render(<Cards />);
+  renderWithProviders(<Cards />);
 
   cards.forEach((card, index) => {
     expect(screen.getAllByRole('img')[index]).toHaveAttribute('src', card.img);

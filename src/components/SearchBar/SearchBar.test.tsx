@@ -1,23 +1,37 @@
+import 'whatwg-fetch';
 import React from 'react';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
 
 import SearchBar from './SearchBar';
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
+import { cleanUpStore, renderWithProviders } from '../../utils/TestUtils';
 
-global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve() })) as jest.Mock;
+global.fetch = jest.fn(() => Promise.resolve({ clone: () => Promise.resolve() })) as jest.Mock;
 
-describe('search bar saves value', () => {
-  afterEach(cleanup);
-
-  it('renders input', async () => {
-    await act(async () => render(<SearchBar onInput={() => {}} />));
+describe('search bar', () => {
+  beforeEach(async () => {
+    await act(async () => renderWithProviders(<SearchBar />));
     await act(async () =>
-      fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } })
+      fireEvent.change(screen.getByPlaceholderText(/search/i), { target: { value: 'test' } })
     );
-  });
+    await waitFor(() => expect(screen.getByRole('img')).toBeInTheDocument());
+  })
+  afterEach(() => {cleanup(); cleanUpStore()});
 
-  it('saves input value', async () => {
-    await act(async () => render(<SearchBar onInput={() => {}} />));
-    expect(screen.getByPlaceholderText('Search...')).toHaveValue('test');
+  it('handles search button click', async () => {
+    await act(async () => fireEvent.click(screen.getByRole('button')));
+    expect(screen.getByTestId('roller')).toBeInTheDocument();
+
+    await waitFor(() => expect(screen.getByRole('img')).toBeInTheDocument())
+  });
+  it('handles on enter event', async () => {
+    await act(async () => fireEvent.keyDown(screen.getByPlaceholderText(/search/i), { key: 'Enter', code: 13, charCode: 13 }));
+    expect(screen.getByTestId('roller')).toBeInTheDocument();
+
+    await waitFor(() => expect(screen.getByRole('img')).toBeInTheDocument())
+  });
+  it('handles any other key pressed', async () => {
+    fireEvent.keyDown(screen.getByPlaceholderText(/search/i), { key: 'Esc', code: 27, charCode: 27 });
+    await waitFor(() => expect(screen.getByRole('img')).toBeInTheDocument())
   });
 });

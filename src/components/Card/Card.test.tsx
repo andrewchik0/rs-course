@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import Card from './Card';
 import cards from '../../assets/cards.json';
+import { renderWithProviders } from '../../utils/TestUtils';
 
 describe('renders card', () => {
   it('renders card', () => {
@@ -14,13 +15,28 @@ describe('renders card', () => {
         writable: true,
       },
     });
-    render(<Card card={Object.assign(cardObject, { birthday: new Date() })} />);
+    renderWithProviders(<Card card={Object.assign(cardObject, { birthday: Date.now() })} />);
 
     expect(screen.getByText(cards[0].name)).toBeInTheDocument();
     expect(
       screen.getByText(cards[0].microchipped ? 'Microchipped' : 'Not microchipped')
     ).toBeInTheDocument();
     expect(screen.getByText(cards[0].breed)).toBeInTheDocument();
+    expect(screen.getByText(/Days/)).toBeInTheDocument();
+  });
+
+  it('renders card', () => {
+    const { ['birthday']: stringDate, ...cardObject } = cards[0];
+
+    Object.defineProperties(cardObject, {
+      birthday: {
+        value: new Date(stringDate),
+        writable: true,
+      },
+    });
+    const now = new Date();
+    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    renderWithProviders(<Card card={Object.assign(cardObject, { birthday: date.getTime() })} />);
     expect(screen.getByText(/Day/)).toBeInTheDocument();
   });
 
@@ -35,7 +51,7 @@ describe('renders card', () => {
     });
     const now = new Date();
     const date = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate() - 4);
-    render(<Card card={Object.assign(cardObject, { birthday: date })} />);
+    renderWithProviders(<Card card={Object.assign(cardObject, { birthday: date.getTime() })} />);
     expect(screen.getByText(/Month/)).toBeInTheDocument();
   });
 
@@ -50,7 +66,7 @@ describe('renders card', () => {
     });
     const now = new Date();
     const date = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    render(<Card card={Object.assign(cardObject, { birthday: date })} />);
+    renderWithProviders(<Card card={Object.assign(cardObject, { birthday: date.getTime() })} />);
     expect(screen.getByText(/Year/)).toBeInTheDocument();
   });
 });

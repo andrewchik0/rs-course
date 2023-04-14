@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import AboutPage from './AboutPage';
+import { renderWithProviders } from '../../utils/TestUtils';
 
 it('renders about page', () => {
-  render(<AboutPage />);
+  renderWithProviders(<AboutPage />);
 
   expect(screen.getByText(/about/i)).toBeInTheDocument();
 });

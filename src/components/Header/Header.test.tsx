@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import Header from './Header';
+import { renderWithProviders } from '../../utils/TestUtils';
 
 it('renders header', () => {
-  render(
+  renderWithProviders(
     <BrowserRouter>
       <Header />
     </BrowserRouter>

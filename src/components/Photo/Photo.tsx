@@ -25,7 +25,7 @@ export default function PortalExample(props: { photo: IPhoto }) {
           {props.photo.alt_description.charAt(0).toUpperCase() +
             props.photo.alt_description.slice(1)}
         </h4>
-      )) || <h4>Photo</h4>}
+      ))}
     </div>
   );
 }

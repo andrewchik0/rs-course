@@ -23,9 +23,9 @@ export default function PhotoModal(props: { photoId: string; onClose: () => void
   });
 
   return (
-    <div className="modal-layout" onClick={props.onClose}>
-      <div className="modal-window" onClick={(e) => e.stopPropagation()}>
-        <button className="close-button" onClick={props.onClose}>
+    <div className="modal-layout" data-testid="modal-layout" onClick={props.onClose}>
+      <div className="modal-window" data-testid="modal-window" onClick={(e) => e.stopPropagation()}>
+        <button className="close-button" onClick={props.onClose} data-testid="close-cross">
           x
         </button>
         {isFetching ? (
@@ -45,7 +45,7 @@ export default function PhotoModal(props: { photoId: string; onClose: () => void
               </h2>
               <h2 className="modal-desc likes">
                 <img src="./heart.svg" height="30px" style={{ transform: 'translate(0, 5px)' }} />
-                &nbsp;{photo?.likes || '0'}
+                &nbsp;{photo?.likes}
               </h2>
               <h3 className="modal-desc tags-desc">Tags:</h3>
               <div className="tags">
