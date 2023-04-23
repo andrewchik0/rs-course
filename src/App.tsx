@@ -6,9 +6,9 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 import './App.css';
-import './components/Photo/Photo.css'
-import './components/PhotoModal/PhotoModal.css'
-import './components/Roller/Roller.css'
+import './components/Photo/Photo.css';
+import './components/PhotoModal/PhotoModal.css';
+import './components/Roller/Roller.css';
 import { PreloadedState } from '@reduxjs/toolkit';
 import Html from './utils/Html';
 import AppRoutes from './components/AppRoutes/AppRoutes';
@@ -29,9 +29,9 @@ function App() {
           <AppRoutes />
         </Provider>
       </BrowserRouter>
-    </Html>      
+    </Html>
   );
 }
 
-delete window.__PRELOADED_STATE__
+delete window.__PRELOADED_STATE__;
 export default App;

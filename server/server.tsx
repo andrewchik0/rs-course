@@ -1,19 +1,19 @@
-import express from 'express'
+import express from 'express';
 import React from 'react';
-import { renderToPipeableStream } from 'react-dom/server'
-import { createServer as createViteServer } from "vite";
+import { renderToPipeableStream } from 'react-dom/server';
+import { createServer as createViteServer } from 'vite';
 
 import Html from '../src/utils/Html';
 import { Provider } from 'react-redux';
 import AppRoutes from '../src/components/AppRoutes/AppRoutes';
 import { setupStore } from '../src/store/store';
-import { StaticRouter } from 'react-router-dom/server'
+import { StaticRouter } from 'react-router-dom/server';
 
 async function createServer() {
   const app = express();
   const port = parseInt(process.env.port || '') || 3042;
 
-  const DEV_ENV = "development";
+  const DEV_ENV = 'development';
   let vite;
 
   if (process.env.NODE_ENV == DEV_ENV) {
@@ -23,18 +23,17 @@ async function createServer() {
         watch: {
           usePolling: true,
           interval: 100,
-        }
+        },
       },
-      appType: "custom",
+      appType: 'custom',
     });
 
     app.use(vite.middlewares);
-  } 
-  else {
-    app.use(express.static("./dist"));
+  } else {
+    app.use(express.static('./dist'));
   }
 
-  app.use(express.static('./public'))
+  app.use(express.static('./public'));
 
   app.get('*', (req, res) => {
     const store = setupStore();
@@ -45,19 +44,20 @@ async function createServer() {
             <AppRoutes />
           </Provider>
         </StaticRouter>
-      </Html>
-      , {
-      bootstrapModules: ['./src/main.tsx'],
-      onShellReady() {
-        res.set('Content-Type', 'text/html');
-        pipe(res);
+      </Html>,
+      {
+        bootstrapModules: ['./src/main.tsx'],
+        onShellReady() {
+          res.set('Content-Type', 'text/html');
+          pipe(res);
+        },
       }
-    });
-  })
-  
+    );
+  });
+
   app.listen(port, () => {
-    console.log(`Server listening on port \x1b[32m${port}\x1b[0m`)
-  })
+    console.log(`Server listening on port \x1b[32m${port}\x1b[0m`);
+  });
 }
 
 createServer();
