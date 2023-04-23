@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
     "target": "esnext",
     "lib": ["dom", "esnext", "dom.iterable"],
     "jsx": "react",
-    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
@@ -15,6 +15,5 @@
     "baseUrl": "./",
     "resolveJsonModule": true,
   },
-  "types": ["@testing-library/jest-dom"],
-  "include": ["./src/**/*"]
+  "include": ["./**/*"]
 }

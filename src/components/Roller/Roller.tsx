@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './Roller.css';
-
 export default function Roller(props: { scale: number; x: number; y: number; style?: object }) {
   return (
     <div

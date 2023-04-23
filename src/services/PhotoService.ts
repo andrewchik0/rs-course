@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import IPhoto from 'models/IPhoto';
+import IPhoto from '../models/IPhoto';
 
 const headers = {
   Authorization: 'Client-ID oEs-sd2oWIy5g8sGMuh8Dp52cQTkggVZg7fIIkIyhrc',

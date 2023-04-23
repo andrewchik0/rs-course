@@ -1,24 +1,37 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import Header from './components/Header/Header';
-import HomePage from './pages/HomePage/HomePage';
-import AboutPage from './pages/AboutPage/AboutPage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import CreateCardPage from './pages/CreateCardPage/CreateCardPage';
+import { RootState, setupStore } from './store/store';
+import { Provider } from 'react-redux';
+
+import './index.css';
+import './App.css';
+import './components/Photo/Photo.css'
+import './components/PhotoModal/PhotoModal.css'
+import './components/Roller/Roller.css'
+import { PreloadedState } from '@reduxjs/toolkit';
+import Html from './utils/Html';
+import AppRoutes from './components/AppRoutes/AppRoutes';
+
+declare global {
+  interface Window {
+    __PRELOADED_STATE__?: PreloadedState<RootState>;
+  }
+}
+
+const store = setupStore(window.__PRELOADED_STATE__);
 
 function App() {
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/create-card" element={<CreateCardPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </>
+    <Html preloadedState={store.getState()}>
+      <BrowserRouter>
+        <Provider store={store}>
+          <AppRoutes />
+        </Provider>
+      </BrowserRouter>
+    </Html>      
   );
 }
 
+delete window.__PRELOADED_STATE__
 export default App;

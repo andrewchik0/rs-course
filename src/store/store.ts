@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 import cardReducer from './reducers/CardSlice';
 import searchInputReducer from './reducers/SearchInputSlice';
 import { photoAPI } from '../services/PhotoService';
@@ -9,10 +9,11 @@ const rootReducer = combineReducers({
   [photoAPI.reducerPath]: photoAPI.reducer,
 });
 
-export const setupStore = () => {
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(photoAPI.middleware),
+    preloadedState: preloadedState
   });
 };
 

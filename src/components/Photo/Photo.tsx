@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 import { createPortal } from 'react-dom';
 import PhotoModal from './../PhotoModal/PhotoModal';
-import IPhoto from 'models/IPhoto';
-import './Photo.css';
+import IPhoto from '../../models/IPhoto';
 
 export default function PortalExample(props: { photo: IPhoto }) {
   const [showModal, setShowModal] = useState(false);
