@@ -6,12 +6,11 @@ import { useFetchByTextQuery } from '../../services/PhotoService';
 
 export default function Photos() {
   const { data } = useFetchByTextQuery(useAppSelector((state) => state.searchInputReducer).value);
-  const photos = data?.results;
 
   return (
     <div className="content">
       <div className="card-container">
-        {photos && photos.map((photo) => <Photo key={photo.id} photo={photo} />)}
+        {data?.results && data.results.map((photo) => <Photo key={photo.id} photo={photo} />)}
       </div>
     </div>
   );

@@ -6,9 +6,11 @@ import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 
 it('renders photo', async () => {
-  await act(async () => renderWithProviders(
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
-  ));
+  await act(async () =>
+    renderWithProviders(
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    )
+  );
 });

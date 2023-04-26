@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import AppRoutes from '../src/components/AppRoutes/AppRoutes';
 import { setupStore } from '../src/store/store';
 import { StaticRouter } from 'react-router-dom/server';
+import photoAPI from '../src/services/PhotoService';
 
 async function createServer() {
   const app = express();
@@ -35,8 +36,13 @@ async function createServer() {
 
   app.use(express.static('./public'));
 
-  app.get('*', (req, res) => {
+  app.get('*', async (req, res) => {
     const store = setupStore();
+    store.dispatch(
+      photoAPI.endpoints.fetchByText.initiate(store.getState().searchInputReducer.value)
+    );
+    await Promise.all(store.dispatch(photoAPI.util.getRunningQueriesThunk()));
+
     const { pipe } = renderToPipeableStream(
       <Html preloadedState={store.getState()}>
         <StaticRouter location={req.originalUrl}>
