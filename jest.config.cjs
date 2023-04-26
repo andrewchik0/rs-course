@@ -1,7 +1,7 @@
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-  coverageDirectory: 'coverage',
+  coverageDirectory: 'coverage_jest',
   coveragePathIgnorePatterns: ['<rootDir>/src/main.tsx'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/jest.setup.ts'],

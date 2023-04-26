@@ -10,7 +10,6 @@ import './components/Photo/Photo.css';
 import './components/PhotoModal/PhotoModal.css';
 import './components/Roller/Roller.css';
 import { PreloadedState } from '@reduxjs/toolkit';
-import Html from './utils/Html';
 import AppRoutes from './components/AppRoutes/AppRoutes';
 
 declare global {
@@ -23,13 +22,11 @@ const store = setupStore(window.__PRELOADED_STATE__);
 
 function App() {
   return (
-    <Html preloadedState={store.getState()}>
-      <BrowserRouter>
-        <Provider store={store}>
-          <AppRoutes />
-        </Provider>
-      </BrowserRouter>
-    </Html>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>
+    </BrowserRouter>
   );
 }
 
