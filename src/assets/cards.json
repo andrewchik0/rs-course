@@ -1,0 +1,42 @@
+[
+  {
+    "img": "src/assets/images/image1.jpg",
+    "name": "Felix",
+    "birthday": "2023-3-23",
+    "breed": "British shorthair",
+    "gender": "female",
+    "microchipped": false
+  },
+  {
+    "img": "src/assets/images/image2.jpg",
+    "name": "Pashtet",
+    "birthday": "2022-03-03",
+    "breed": "British shorthair",
+    "gender": "male",
+    "microchipped": true
+  },
+  {
+    "img": "src/assets/images/image3.jpg",
+    "name": "Semen Semenych",
+    "birthday": "2023-01-23",
+    "breed": "British shorthair",
+    "gender": "female",
+    "microchipped": false
+  },
+  {
+    "img": "src/assets/images/image1.jpg",
+    "name": "Pushok",
+    "birthday": "2022-12-23",
+    "breed": "British shorthair",
+    "gender": "male",
+    "microchipped": true
+  },
+  {
+    "img": "src/assets/images/image2.jpg",
+    "name": "Sharik",
+    "birthday": "2015-3-23",
+    "breed": "British shorthair",
+    "gender": "female",
+    "microchipped": false
+  }
+]
